@@ -24,7 +24,6 @@
 		$email = $_POST['email'];
 		$cell = $_POST['cell'];
 		$pass = $_POST['password'];
-		// $photo = $_POST['photo'];
 
 		//form validation
 		if(empty($name) || empty($uname) || empty($email) || empty($cell) || empty($pass)){
@@ -32,11 +31,19 @@
 		}else if(filter_var($email, FILTER_VALIDATE_EMAIL) == false){
 			$mess = validation('Invalid email.', 'warning');
 		}else if(dataCheck($connection, 'users', 'email', $email) == false){
-			$mess = validation('Email already exists', 'warning');
+			$mess = validation('Email already exists!', 'warning');
 		}else if(dataCheck($connection, 'users', 'uname', $uname) == false){
-			$mess = validation('Username already exists', 'warning');
+			$mess = validation('Username already exists!', 'warning');
 		}else{
-
+			$photo = fileUpload($_FILES['photo'], 'photos/');
+			$photo_name = $photo['file_name'];
+			if(!empty($photo['mess'])){
+				$mess = $photo['mess'];
+			}else{
+				$sql = "INSERT INTO users(name, uname, email, cell, pass, photo) VALUES('$name', '$uname', '$email', '$cell', '$pass', '$photo_name')";
+				$connection -> query($sql);
+				$mess = validation('User registration successful.', 'success');
+			}
 		}
 	}
 
