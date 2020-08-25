@@ -1,3 +1,7 @@
+<?php
+	require_once 'app/autoload.php';
+
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

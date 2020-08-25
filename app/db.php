@@ -3,7 +3,7 @@
   $host = 'localhost';
   $username = 'root';
   $password = '';
-  $db = 'pm';
+  $db = 'devzone';
 
   //database connection
   $connection = new mysqli($host, $username, $password, $db);
