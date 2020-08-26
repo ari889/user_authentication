@@ -32,6 +32,15 @@
 			if($user_num == 1){
 				//password check
 				if(password_verify($pass, $login_user_data['pass']) == true){
+					//session data management
+					session_start();
+					$_SESSION['id'] = $login_user_data['id'];
+					$_SESSION['name'] = $login_user_data['name'];
+					$_SESSION['cell'] = $login_user_data['cell'];
+					$_SESSION['uname'] = $login_user_data['uname'];
+					$_SESSION['email'] = $login_user_data['email'];
+					$_SESSION['photo'] = $login_user_data['photo'];
+
 
 					//redirect profile
 					header('location:profile.php');
