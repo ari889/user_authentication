@@ -25,6 +25,9 @@
 		$cell = $_POST['cell'];
 		$pass = $_POST['password'];
 
+		//password hash
+		$pass_hash = password_hash($pass, PASSWORD_DEFAULT);
+
 		//form validation
 		if(empty($name) || empty($uname) || empty($email) || empty($cell) || empty($pass)){
 			$mess = validation('All fields are required', 'Danger');
@@ -40,7 +43,7 @@
 			if(!empty($photo['mess'])){
 				$mess = $photo['mess'];
 			}else{
-				$sql = "INSERT INTO users(name, uname, email, cell, pass, photo) VALUES('$name', '$uname', '$email', '$cell', '$pass', '$photo_name')";
+				$sql = "INSERT INTO users(name, uname, email, cell, pass, photo) VALUES('$name', '$uname', '$email', '$cell', '$pass_hash', '$photo_name')";
 				$connection -> query($sql);
 				$mess = validation('User registration successful.', 'success');
 			}
