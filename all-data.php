@@ -55,7 +55,7 @@
 								<td><img src="photos/<?php echo $user_data['photo']; ?>" alt="" class="img-fluid custom-image"></td>
                 <td class="text-right">
 									<?php if($user_data['id'] == $_SESSION['id']): ?>
-                  <a href="#" class="btn btn-warning">Edit</a>
+                  <a href="edit.php?edit_id=<?php echo $user_data['id']; ?>" class="btn btn-warning">Edit</a>
                   <a id="deactivate" href="?account_deactive_id=<?php echo $user_data['id']; ?>" class="btn btn-danger" id="delete-btn">Deactive</a>
 									<?php else: ?>
 									  <a href="view.php?profile_id=<?php echo $user_data['id']; ?>" class="btn btn-info">View</a>
