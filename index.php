@@ -1,6 +1,10 @@
 <?php
 	require_once 'app/autoload.php';
+	//page security
 
+	if(isset($_SESSION['id']) && isset($_SESSION['name'])){
+		header('location:profile.php');
+	}
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +37,6 @@
 				//password check
 				if(password_verify($pass, $login_user_data['pass']) == true){
 					//session data management
-					session_start();
 					$_SESSION['id'] = $login_user_data['id'];
 					$_SESSION['name'] = $login_user_data['name'];
 					$_SESSION['cell'] = $login_user_data['cell'];

@@ -1,3 +1,7 @@
+<?php
+	require_once "app/autoload.php";
+
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,28 +23,39 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Photo</th>
-              <th scope="col">Product Name</th>
-              <th scope="col">Price</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Total</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Username</th>
+              <th scope="col">photo</th>
               <th scope="col" class="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
+
+						<?php
+								$sql = 'SELECT * FROM users';
+								$data = $connection -> query($sql);
+								while($user_data = $data -> fetch_assoc()):
+						 ?>
               <tr>
                 <th scope="row">1</th>
-                <td><img src="products/image.jpg" alt="" class="img-fluid custom-image"></td>
-                <td>Alu</td>
-                <td>25</td>
-                <td>25</td>
-                <td>225</td>
+                <td><?php echo $user_data['name']; ?></td>
+                <td><?php echo $user_data['email']; ?></td>
+                <td><?php echo $user_data['uname']; ?></td>
+								<td><img src="photos/<?php echo $user_data['photo']; ?>" alt="" class="img-fluid custom-image"></td>
                 <td class="text-right">
-                  <a href="profile.php" class="btn btn-info">View</a>
+									<?php if($user_data['id'] == $_SESSION['id']): ?>
                   <a href="#" class="btn btn-warning">Edit</a>
                   <a href="all-data.php" class="btn btn-danger" id="delete-btn">Delete</a>
+									<?php else: ?>
+									  <a href="view.php?profile_id=<?php echo $user_data['id']; ?>" class="btn btn-info">View</a>
+									<?php endif; ?>
                 </td>
               </tr>
+						<?php endwhile; ?>
+
+
+
           </tbody>
         </table>
       </div>
