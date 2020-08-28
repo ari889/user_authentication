@@ -43,6 +43,7 @@
 					$_SESSION['uname'] = $login_user_data['uname'];
 					$_SESSION['email'] = $login_user_data['email'];
 					$_SESSION['photo'] = $login_user_data['photo'];
+					$_SESSION['pass'] = $login_user_data['pass'];
 
 
 					//redirect profile

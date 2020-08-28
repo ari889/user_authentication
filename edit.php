@@ -21,9 +21,18 @@
 		if(empty($name) || empty($email) || empty($cell)){
 			$mess = validation('All filds are required.', 'danger');
 		}else{
-			$sql = "UPDATE users SET name = '$name', email = '$email', cell = '$cell' WHERE id = '$eid'";
+
+			if(!empty($_FILES['new_photo']['name'])){
+				$photo = fileUpload($_FILES['new_photo'], 'photos/');
+				$photo_name = $photo['file_name'];
+			}else{
+				$photo_name = $_POST['old_photo'];
+			}
+			$sql = "UPDATE users SET name = '$name', email = '$email', cell = '$cell', photo = '$photo_name' WHERE id = '$eid'";
 			$connection -> query($sql);
 			$mess = validation('Data update successful.', 'success');
+
+			$_SESSION['photo'] = $photo_name;
 		}
 	}
 	if(isset($_GET['edit_id'])){
@@ -44,7 +53,7 @@
 <body>
 	<div class="custom_signup">
 		<a href="all-data.php" class="btn btn-info">All Users</a>
-		<a href="#" class="btn btn-info">Change Password</a>
+		<a href="password_change.php" class="btn btn-info">Change Password</a>
     <div class="card mt-3">
       <div class="card-body">
 				<form action="" method="POST" enctype="multipart/form-data">
@@ -71,10 +80,11 @@
 					</div>
 					<div class="form-group">
 						  <img src="photos/<?php echo $edit_data -> photo; ?>" alt="" class="shadow-sm img-fluid">
+							<input type="hidden" value="<?php echo $edit_data -> photo; ?>" name="old_photo">
 					</div>
 					<div class="form-group">
 						<label for="">Photo</label>
-						<input type="file" class="form-control">
+						<input type="file" class="form-control" name="new_photo">
 					</div>
 					<div class="form-group">
 						<input name="edit" type="submit" value="Update" class="btn btn-primary">
