@@ -1,6 +1,15 @@
 <?php
 	require_once "app/autoload.php";
 
+
+	if(isset($_GET['account_deactive_id'])){
+		$daid = $_GET['account_deactive_id'];
+		$sql = "DELETE FROM users WHERE id='$daid'";
+		$connection -> query($sql);
+		session_destroy();
+		unlink('photos/'.$_SESSION['photo']);
+		header('location:index.php');
+	}
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,10 +44,11 @@
 						<?php
 								$sql = 'SELECT * FROM users';
 								$data = $connection -> query($sql);
+								$i = 1;
 								while($user_data = $data -> fetch_assoc()):
 						 ?>
               <tr>
-                <th scope="row">1</th>
+                <th scope="row"><?php echo $i; $i++; ?></th>
                 <td><?php echo $user_data['name']; ?></td>
                 <td><?php echo $user_data['email']; ?></td>
                 <td><?php echo $user_data['uname']; ?></td>
@@ -46,7 +56,7 @@
                 <td class="text-right">
 									<?php if($user_data['id'] == $_SESSION['id']): ?>
                   <a href="#" class="btn btn-warning">Edit</a>
-                  <a href="all-data.php" class="btn btn-danger" id="delete-btn">Delete</a>
+                  <a id="deactivate" href="?account_deactive_id=<?php echo $user_data['id']; ?>" class="btn btn-danger" id="delete-btn">Deactive</a>
 									<?php else: ?>
 									  <a href="view.php?profile_id=<?php echo $user_data['id']; ?>" class="btn btn-info">View</a>
 									<?php endif; ?>
@@ -63,5 +73,6 @@
 	</div>
 	<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/custom.js"></script>
 </body>
 </html>
